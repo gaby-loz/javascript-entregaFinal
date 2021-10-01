@@ -1,0 +1,48 @@
+body{
+    padding: 2rem;
+    background-color: black;
+    font-family: 'Montserrat', sans-serif;
+}
+p{
+    color: white;
+}
+h1, h2, h3, h4, h5, h6{
+    color:white;
+}
+#cursoContenedor {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+div{
+    color:black;
+}
+
+#carritoCantidad{
+    color: white;
+}
+
+.heroCarrito{
+    display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 50px;
+  padding-right: 20px;
+  background-image: url(img/buho-filosof¡a.jpg);
+  background-position: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 50vh; }
+  .heroInicio p, .heroInicio--sobreMi p, .heroInicio--seminario p, .heroInicio--emergente p, .heroInicio--contacto p, .heroInicio--diferencia p, .heroInicio--diferenciaSexual p, .heroInicio--preciadoGucci p, .heroInicio--queer p {
+    width: 580px; }
+  .heroInicio h1, .heroInicio--sobreMi h1, .heroInicio--seminario h1, .heroInicio--emergente h1, .heroInicio--contacto h1, .heroInicio--diferencia h1, .heroInicio--diferenciaSexual h1, .heroInicio--preciadoGucci h1, .heroInicio--queer h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 80px;
+    margin-bottom: 0;
+}
