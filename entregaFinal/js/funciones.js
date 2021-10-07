@@ -74,10 +74,24 @@ function carritoUI(cursosDisponibles){
         $('#carritoCursos').append(registroCarrito(curso));
     }
 
+    //AGREGAR TOTAL
+ $("#carritoCursos").append(`<p id="totalCarrito"> TOTAL ${totalCarrito(cursosDisponibles)}</p>`);
+
+ $("#carritoCursos").append(`<a id="btnConfirmar" class="btn btn-info btn-add">Finalizar compra</a>`)
+ 
+ //FUNCION PARA OBTENER EL PRECIO TOTAL DEL CARRITO
+function totalCarrito(carrito) {
+    console.log(carrito);
+    let total = 0;
+    carrito.forEach(p => total += p.subtotal());
+    return total.toFixed(2);
+}
+
     //ASOCIAR EVENTOS A LA INTERFAZ GENERADA
     $(".btn-add").click(addCantidad);
     $(".btn-delete").click(eliminarCarrito);
     $(".btn-restar").click(restarCantidad);
+    $("#btnConfirmar").click(confirmarCompra);
 }
 
 //FUNCION PARA GENERAR LA ESTRUCTURA DEL REGISTRO HTML
@@ -144,9 +158,41 @@ function restarCantidad(){
         $("#totalCarrito").html(`TOTAL ${totalCarrito(carrito)}`);
 
         //GUARDAR EN EL STORAGE
-        localStorage.setItem("carrito", JSON.stringify(carrito));
+        localStorage.setItem("carrito", JSON.stringify(totalCarrito));
 
 
     }
 
 }
+
+function confirmarCompra(){
+
+    // REALIZAMOS LA PETICION POST
+    const URLPOST = 'http://jsonplaceholder.typicode.com/posts';
+  
+    // INFORMACION A ENVIAR
+    const DATA = {productos: JSON.stringify(carrito), total: totalCarrito(carrito)}
+  
+    // PETICION POST CON AJAX
+    $.post(URLPOST, DATA, function(respuesta,estado){
+      console.log(respuesta);
+        console.log(estado);
+        if(estado == 'success'){
+          //MOSTRAMOS NOTIFICACION DE CONFIRMACIÓN (CON ANIMACIONES)
+          $("#notificaciones").html(`<div class="alert alert-sucess alert-dismissible fade show" role="alert">
+                      <strong>COMPRA CONFIRMADA!</strong> Comprobante Nº ${respuesta.id}.
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>`).fadeIn().delay(2000);
+          //VACIAR CARRITO;
+          carrito.splice(0, carrito.length);
+          //SOBREESCRIBIR ALMACENADO EN STORAGE
+          localStorage.setItem("CARRITO",'[]');
+          //VACIAR CONTENIDO DEL MENU
+          $('#carritoCursos').empty();
+          //VOLVER INDICADOR A 0
+          $('#carritoCantidad').html(0);
+        }
+    });
+  }
